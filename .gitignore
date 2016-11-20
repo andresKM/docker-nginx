@@ -49,3 +49,5 @@ jspm_packages
 
 
 mainline/alpine/dist/tasks
+mainline/alpine/dist/src
+mainline/alpine/dist/gulpfile.js
