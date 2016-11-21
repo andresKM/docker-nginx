@@ -16,12 +16,13 @@
 	<link rel="stylesheet" type="text/css" href="../dist/components/image.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/menu.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/divider.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/dropdown.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/segment.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/button.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/list.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/icon.css">
 	<link rel="stylesheet" type="text/css" href="../dist/components/sidebar.css">
+	<link rel="stylesheet" type="text/css" href="../dist/components/tab.css">
+	<link rel="stylesheet" type="text/css" href="../dist/components/form.css">
 	<link rel="stylesheet" type="text/css" href="../assets/offline-theme-default.css">
 	<link rel="stylesheet" type="text/css" href="../assets/offline-language-ua.css">
 	<!-- <link rel="stylesheet" type="text/css" href="../dist/components/transition.css"> -->
@@ -90,7 +91,7 @@
 	}
 	
 	.footer.segment {
-		padding: 5em 0em;
+		padding: 4em 0em;
 	}
 	
 	.secondary.pointing.menu .toc.item {
@@ -153,12 +154,44 @@
 		display: block;
 		background: url(../assets/preloader_1.gif) center no-repeat #fff;
 	}
+	
+	#sidebar-menu {}
+	
+	.ui.vertical.tabular.menu {
+		background: #1B1C1D;
+		border-radius: 0em;
+		box-shadow: none !important;
+		border-bottom: none;
+		border-right: none;
+	}
+	
+	.ui.vertical.tabular.menu .active.item {
+		background: rgba(255, 255, 255, 0.15);
+		/* border-color: #D4D4D5; */
+		margin: 0;
+		/* border-radius: 0.28571429rem 0px 0px 0.28571429rem !important; */
+		border-radius: 0;
+	}
+	
+	.ui.tab {
+		margin-top: 50px;
+	}
+	
+	.ui.form .field > label {
+		display: block;
+		margin: 0em 0em 1rem 0em;
+		color: rgba(0, 0, 0, 0.87);
+		font-size: 1em;
+		font-weight: bold;
+		text-transform: none;
+	}
 	</style>
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script> -->
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 	<script src="../assets/jquery.min.js"></script>
 	<script src="../dist/components/visibility.js"></script>
 	<script src="../dist/components/sidebar.js"></script>
+	<script src="../dist/components/tab.js"></script>
 	<script src="../assets/modernizr.min.js"></script>
 	<script src="../assets/offline.min.js"></script>
 	<script src="../assets/elasticsearch.jquery.min.js"></script>
@@ -193,6 +226,7 @@
 					host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
 
 				});
+				//make here a ping call to db
 
 			});
 		});
@@ -203,20 +237,8 @@
 	$(window).load(function() {
 		// Animate loader off screen
 		$(".se-pre-con").fadeOut(3500);
+		$('.tabular.menu .item').tab();
 		Offline.check();
-		client.ping({
-			// ping usually has a 3000ms timeout
-			requestTimeout: Infinity,
-
-			// undocumented params are appended to the query string
-			hello: "elasticsearch!"
-		}, function(error) {
-			if (error) {
-				console.trace('elasticsearch cluster is down!');
-			} else {
-				console.log('All is well');
-			}
-		});
 	});
 	</script>
 </head>
@@ -224,24 +246,24 @@
 <body>
 	<div class="se-pre-con"></div>
 	<!-- Sidebar Menu -->
-	<div class="ui vertical inverted sidebar menu">
+	<div class="ui vertical inverted sidebar menu tabular" id="sidebar-menu">
 		<a class="active item">Головна</a>
-		<a class="item">ТЕМР</a>
-		<a class="item">Пошук по ТТН</a>
-		<a class="item">Пошук по авто</a>
+		<a class="item" data-tab="tab-car">Пошук по авто</a>
+		<a class="item" data-tab="tab-ttn">Пошук по ТТН</a>
+		<a class="item" data-tab="tab-birka">Пошук по бірці</a>
 	</div>
 	<!-- Page Contents -->
 	<div class="pusher">
 		<div class="ui inverted vertical masthead center aligned segment" id="main-menu">
 			<div class="ui container">
-				<div class="ui medium secondary inverted pointing menu">
+				<div class="ui medium secondary inverted pointing menu tabular">
 					<a class="toc item">
 						<i class="sidebar icon"></i>
 					</a>
 					<a class="active item">Головна</a>
-					<a class="item">Пошук по авто</a>
-					<a class="item">Пошук по ТТН</a>
-					<a class="item">Пошук по бірці</a>
+					<a class="item" data-tab="tab-car">Пошук по авто</a>
+					<a class="item" data-tab="tab-ttn">Пошук по ТТН</a>
+					<a class="item" data-tab="tab-birka">Пошук по бірці</a>
 					<div class="right item">
 						<!-- <a class="ui inverted button"></a> -->
 						<a class="ui inverted button">Як користуватися</a>
@@ -256,18 +278,35 @@
 				<div class="ui huge primary button" id="jumbo_button">Розпочати <i class="right arrow icon"></i></div>
 			</div>
 		</div>
+		<div class="ui tab" data-tab="tab-car">
+			<div class="ui raised very padded text container segment">
+				<div class="ui huge form">
+					<div class="field">
+						<label>Введіть номер авто для перевірки</label>
+						<input placeholder="Введіть Ваш запит" type="text">
+					</div>
+					<div class="ui large blue submit button">
+						<i class="search icon"></i> Пошук
+					</div>
+				</div>
+			</div>
+			<div class="ui raised very padded text container segment">
+				<h2 class="ui header">Humans with Dogs</h2>
+				<p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>
+				<p>The dogs' value to early human hunter-gatherers led to them quickly becoming ubiquitous across world cultures. Dogs perform many roles for people, such as hunting, herding, pulling loads, protection, assisting police and military, companionship, and, more recently, aiding handicapped individuals. This impact on human society has given them the nickname "man's best friend" in the Western world. In some cultures, however, dogs are also a source of meat.</p>
+			</div>
+		</div>
+		<div class="ui tab" data-tab="tab-ttn">
+			<div class="ui raised very padded text container segment">
+				<h2 class="ui header">Dogs with Humans</h2>
+				<p>The dogs' value to early human hunter-gatherers led to them quickly becoming ubiquitous across world cultures. Dogs perform many roles for people, such as hunting, herding, pulling loads, protection, assisting police and military, companionship, and, more recently, aiding handicapped individuals. This impact on human society has given them the nickname "man's best friend" in the Western world. In some cultures, however, dogs are also a source of meat.</p>
+			</div>
+		</div>
+		<div class="ui tab" data-tab="tab-birka">
+		</div>
 		<div class="ui vertical stripe segment">
 			<div class="ui middle aligned stackable grid container">
 				<div class="row">
-					<div class="eight wide column">
-						<h3 class="ui header">We Help Companies and Companions</h3>
-						<p>We can give your Пошук по ТТН superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
-						<h3 class="ui header">We Make Bananas That Can Dance</h3>
-						<p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
-					</div>
-					<div class="six wide right floated column">
-						<img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
-					</div>
 				</div>
 				<div class="row">
 					<div class="center aligned column">
@@ -282,37 +321,17 @@
 				<p>Instead of focusing on content creation and hard Як користуватися, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
 				<a class="ui large button">Read More</a>
 				<h4 class="ui horizontal header divider">
-		<a href="#">Case Studies</a>
-	  </h4>
-				<h3 class="ui header">Did We Tell You About Our Bananas?</h3>
-				<p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>
-				<a class="ui large button">I'm Still Quite Interested</a>
+					<a href="#">Case Studies</a>
+				</h4>
 			</div>
 		</div>
 		<div class="ui inverted vertical footer segment">
 			<div class="ui container">
 				<div class="ui stackable inverted divided equal height stackable grid">
-					<div class="three wide column">
-						<h4 class="ui inverted header">About</h4>
-						<div class="ui inverted link list">
-							<a href="#" class="item">Sitemap</a>
-							<a href="#" class="item">Contact Us</a>
-							<a href="#" class="item">Religious Ceremonies</a>
-							<a href="#" class="item">Gazebo Plans</a>
-						</div>
-					</div>
-					<div class="three wide column">
-						<h4 class="ui inverted header">Services</h4>
-						<div class="ui inverted link list">
-							<a href="#" class="item">Banana Pre-Order</a>
-							<a href="#" class="item">DNA FAQ</a>
-							<a href="#" class="item">How To Access</a>
-							<a href="#" class="item">Favorite X-Men</a>
-						</div>
-					</div>
-					<div class="seven wide column">
-						<h4 class="ui inverted header">Footer</h4>
-						<p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+					<div class="seven wide centered column">
+						<h3 class="ui inverted header">Footer</h3>
+						<h4 class="ui inverted ">Fo</h4>
+						<!-- <p>Extra space for a call to action inside the footer that could help re-engage users.</p> -->
 					</div>
 				</div>
 			</div>
