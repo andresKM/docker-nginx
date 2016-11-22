@@ -8,238 +8,70 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<!-- Site Properties -->
 	<title>Головна сторінка тестового сервісу перевірки деревини - FSC</title>
-	<link rel="stylesheet" type="text/css" href="../dist/components/reset.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/site.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/container.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/grid.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/header.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/image.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/menu.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/divider.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/segment.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/button.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/list.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/icon.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/sidebar.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/tab.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/form.css">
-	<link rel="stylesheet" type="text/css" href="../dist/components/message.css">
-	<link rel="stylesheet" type="text/css" href="../assets/offline-theme-default.css">
-	<link rel="stylesheet" type="text/css" href="../assets/offline-language-ua.css">
-	<!-- <link rel="stylesheet" type="text/css" href="../dist/components/transition.css"> -->
-	<style type="text/css">
-	.hidden.menu {
-		display: none;
-	}
-	
-	.masthead.segment {
-		min-height: 650px;
-		padding: 1em 0em;
-	}
-	
-	.masthead .logo.item img {
-		margin-right: 1em;
-	}
-	
-	.masthead .ui.menu .ui.button {
-		margin-left: 0.5em;
-	}
-	
-	.masthead h1.ui.header {
-		margin-top: 2em;
-		margin-bottom: 0em;
-		font-size: 4em;
-		font-weight: normal;
-	}
-	
-	.masthead h2 {
-		font-size: 1.7em;
-		font-weight: normal;
-	}
-	
-	.ui.vertical.stripe {
-		padding: 8em 0em;
-	}
-	
-	.ui.vertical.stripe h3 {
-		font-size: 2em;
-	}
-	
-	.ui.vertical.stripe .button + h3,
-	.ui.vertical.stripe p + h3 {
-		margin-top: 3em;
-	}
-	
-	.ui.vertical.stripe .floated.image {
-		clear: both;
-	}
-	
-	.ui.vertical.stripe p {
-		font-size: 1.33em;
-	}
-	
-	.ui.vertical.stripe .horizontal.divider {
-		margin: 3em 0em;
-	}
-	
-	.quote.stripe.segment {
-		padding: 0em;
-	}
-	
-	.quote.stripe.segment .grid .column {
-		padding-top: 5em;
-		padding-bottom: 5em;
-	}
-	
-	.footer.segment {
-		padding: 4em 0em;
-	}
-	
-	.secondary.pointing.menu .toc.item {
-		display: none;
-	}
-	
-	#jumbo_button {
-		margin-top: 50px;
-	}
-	
-	.main-menu-slim {
-		height: 46px;
-	}
-	
-	@media only screen and (max-width: 700px) {
-		.ui.fixed.menu {
-			display: none !important;
-		}
-		.secondary.pointing.menu .item,
-		.secondary.pointing.menu .menu {
-			display: none;
-		}
-		.secondary.pointing.menu .toc.item {
-			display: block;
-		}
-		.masthead.segment {
-			min-height: 315px;
-		}
-		.masthead h1.ui.header {
-			font-size: 2em;
-			margin-top: 1.5em;
-		}
-		.masthead h2 {
-			margin-top: 0.5em;
-			font-size: 1.5em;
-		}
-		#jumbo_button {
-			margin-top: 30px;
-		}
-	}
-	
-	.no-js #loader {
-		display: none;
-	}
-	
-	.js #loader {
-		display: block;
-		position: absolute;
-		left: 100px;
-		top: 0;
-	}
-	
-	.se-pre-con {
-		position: fixed;
-		left: 0px;
-		top: 0px;
-		width: 100%;
-		height: 100%;
-		z-index: 9999;
-		display: block;
-		background: url(../assets/preloader_1.gif) center no-repeat #fff;
-	}
-	
-	#sidebar-menu {}
-	
-	.ui.vertical.tabular.menu {
-		background: #1B1C1D;
-		border-radius: 0em;
-		box-shadow: none !important;
-		border-bottom: none;
-		border-right: none;
-	}
-	
-	.ui.vertical.tabular.menu .active.item {
-		background: rgba(255, 255, 255, 0.15);
-		/* border-color: #D4D4D5; */
-		margin: 0;
-		/* border-radius: 0.28571429rem 0px 0px 0.28571429rem !important; */
-		border-radius: 0;
-	}
-	
-	.ui.tab {
-		margin-top: 50px;
-	}
-	
-	.ui.form .field > label {
-		display: block;
-		margin: 0em 0em 1rem 0em;
-		color: rgba(0, 0, 0, 0.87);
-		font-size: 1em;
-		font-weight: bold;
-		text-transform: none;
-	}
-	.ui.vertical.stripe {
-		padding: 3em 0em;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="dist/semantic.css">
+	<!-- <link rel="stylesheet" type="text/css" href="dist/components/reset.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/site.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/container.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/grid.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/header.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/image.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/menu.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/divider.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/segment.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/button.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/list.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/icon.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/sidebar.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/tab.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/form.css">
+	<link rel="stylesheet" type="text/css" href="dist/components/message.css"> -->
+	<link rel="stylesheet" type="text/css" href="assets/main.css">
+	<link rel="stylesheet" type="text/css" href="assets/offline-theme-default.css">
+	<link rel="stylesheet" type="text/css" href="assets/offline-language-ua.css">
+	<!-- <link rel="stylesheet" type="text/css" href="dist/components/transition.css"> -->
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script> -->
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
-	<script src="../assets/jquery.min.js"></script>
-	<script src="../dist/components/visibility.js"></script>
-	<script src="../dist/components/sidebar.js"></script>
-	<script src="../dist/components/tab.js"></script>
-	<script src="../assets/modernizr.min.js"></script>
-	<script src="../assets/offline.min.js"></script>
-	<script src="../assets/elasticsearch.jquery.min.js"></script>
-	<!-- <script src="../assets/offline-simulate-ui.min.js"></script> -->
-	<!-- <script src="../dist/components/transition.js"></script> -->
+	<script src="assets/jquery.min.js"></script>
+	<!-- <script src="dist/components/visibility.js"></script>
+	<script src="dist/components/sidebar.js"></script>
+	<script src="dist/components/tab.js"></script>
+	<script src="dist/components/form.js"></script> -->
+	<script src="dist/semantic.js"></script>
+	<script src="assets/modernizr.min.js"></script>
+	<script src="assets/offline.min.js"></script>
+	<script src="assets/elasticsearch.jquery.min.js"></script>
+	<!-- <script src="assets/offline-simulate-ui.min.js"></script> -->
+	<!-- <script src="dist/components/transition.js"></script> -->
 	<script>
-	$(document)
-		.ready(function() {
-			// fix menu when passed
-			$('.masthead')
-				.visibility({
-					once: false,
-					onBottomPassed: function() {
-						// $('.fixed.menu').transition('fade in');
-						$('.fixed.menu');
-					},
-					onBottomPassedReverse: function() {
-						// $('.fixed.menu').transition('fade out');
-						$('.fixed.menu');
-					}
-				});
-			// create sidebar and attach to menu open
-			$('.ui.sidebar').sidebar('attach events', '.toc.item');
-			$("#jumbo_button").click(function() {
-				$("#jumbo").hide();
-				$(".masthead.segment").css("height", "80px");
-				$(".masthead.segment").css("min-height", "80px");
-				//$("#main-menu").removeClass(".masthead .segment");
-				//$("#main-menu").addClass("main-menu-slim");
+	var client = new $.es.Client({
+		host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
+	});
 
-				var client = new $.es.Client({
-					host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
-
-				});
-				//make here a ping call to db
-
-			});
+	$(document).ready(function() {
+		// fix menu when passed
+		$('.masthead').visibility({
+			once: false,
+			onBottomPassed: function() {
+				// $('.fixed.menu').transition('fade in');
+				$('.fixed.menu');
+			},
+			onBottomPassedReverse: function() {
+				// $('.fixed.menu').transition('fade out');
+				$('.fixed.menu');
+			}
 		});
-	</script>
-	<script>
-	//paste this code under head tag or in a seperate js file.
-	// Wait for window load
-	$(window).load(function() {
-		// Animate loader off screen
+		// create sidebar and attach to menu open
+		$('.ui.sidebar').sidebar('attach events', '.toc.item');
+
+		$("#jumbo_button").click(function() {
+			$("#jumbo").hide();
+			$(".masthead.segment").css("height", "80px");
+			$(".masthead.segment").css("min-height", "80px");
+			//$("#main-menu").removeClass(".masthead .segment");
+			//$("#main-menu").addClass("main-menu-slim");
+
+			//make here a ping call to db
+		});
 		$(".se-pre-con").fadeOut(3500);
 		$('.tabular.menu .item').tab({
 			onFirstLoad: function() {
@@ -247,11 +79,159 @@
 			}
 
 		});
+		//Offline.options = {checks: {image: {url: 'http://www.proderevo.info/favicon.ico'}, active: 'image'}};
 		Offline.check();
 		$('.message .close').on('click', function() {
-				$(this).closest('.message').hide();
-				$(".ui.horizontal.divider").hide();
+			$(this).closest('.message').hide();
+			$(".ui.horizontal.divider").hide();
+		});
+
+
+
+		$.fn.submit_car = function() {
+			console.log("sbmt");
+			/*var formData = {
+				field1: getFieldValue('search_car')
+			}*/
+			//send search to elastic
+			var qq = $("#car-form").form('get field', "search_car").val();
+			client.search({
+				index: 'fsc',
+				q: "car_number:"+qq,
+				size: 1
+			}).then(function(body) {
+				var hits = body.hits.hits;
+				console.log(hits);
+			}, function(error) {
+				console.trace(error.message);
 			});
+
+
+
+		};
+
+		$.fn.submit_ttn = function() {
+			console.log("sbmt");
+			/*var formData = {
+				field1: getFieldValue('search_car')
+			}*/
+			var qq = $("#ttn-form").form('get field', "search_ttn").val();
+			client.search({
+				index: 'fsc',
+				q: "ttn:"+qq,
+				size: 1
+			}).then(function(body) {
+				var hits = body.hits.hits;
+				console.log(hits);
+			}, function(error) {
+				console.trace(error.message);
+			});
+
+		};
+
+
+		$.fn.submit_birka = function() {
+			console.log("sbmt");
+			/*var formData = {
+				field1: getFieldValue('search_car')
+			}*/
+			var qq = $("#birka-form").form('get field', "search_birka").val();
+			client.search({
+				index: 'fsc',
+				q: qq,
+				size: 1
+			}).then(function(body) {
+				var hits = body.hits.hits;
+				console.log(hits);
+			}, function(error) {
+				console.trace(error.message);
+			});
+
+		};
+
+
+
+		$('#car-form .submit.button').on('click', function() {
+			$.fn.submit_car ();
+		});
+
+		$('#birka-form-form .submit.button').on('click', function() {
+			$.fn.submit_birka ();
+		});
+
+		$('#ttn-form .submit.button').on('click', function() {
+			$.fn.submit_ttn();
+		});
+
+
+
+
+
+		$('#car-form').form({
+			fields: {
+				// search_car: 'empty'
+				search_car: {
+					identifier: 'search_car',
+					rules: [{
+						type: 'empty'
+					}]
+				}
+				// onSuccess: function() {
+				// 	$.fn.submit_car();
+				// }
+			}
+		});
+
+		
+
+		$('#ttn-form').form({
+			fields: {
+				// search_car: 'empty'
+				search_car: {
+					identifier: 'search_ttn',
+					rules: [{
+						type: 'empty'
+					}]
+				}
+			}
+		});
+
+		$('#birka-form').form({
+			fields: {
+				// search_car: 'empty'
+				search_car: {
+					identifier: 'search_birka',
+					rules: [{
+						type: 'empty'
+					}]
+				}
+			}
+		});
+
+		$.fn.makeTable = function(mydata) {
+			var table = $('<table >');
+			var tblHeader = "<tr>";
+			for (var k in mydata[0]) tblHeader += "<th>" + k + "</th>";
+			tblHeader += "</tr>";
+			$(tblHeader).appendTo(table);
+			$.each(mydata, function(index, value) {
+				var TableRow = "<tr>";
+				$.each(value, function(key, val) {
+					TableRow += "<td>" + val + "</td>";
+				});
+				TableRow += "</tr>";
+				$(table).append(TableRow);
+			});
+			return ($(table));
+		};
+
+		$.fn.renderJson = function (sel,data) {
+			var mydata = eval(data);
+			var table = $.makeTable(mydata);
+			$(table).appendTo(sel);
+		};			
+
+
 	});
 	</script>
 </head>
@@ -292,14 +272,15 @@
 		</div>
 		<div class="ui tab" data-tab="tab-car">
 			<div class="ui raised very padded text container segment">
-				<div class="ui huge form">
+				<div class="ui huge form" id="car-form">
 					<div class="field">
 						<label>Введіть номер авто для перевірки</label>
-						<input placeholder="Введіть Ваш запит" type="text">
+						<input placeholder="Введіть Ваш запит" type="text" name="search_car">
 					</div>
 					<div class="ui large blue submit button">
 						<i class="search icon"></i> Пошук
 					</div>
+					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
 			<div class="ui raised very padded text container segment">
@@ -309,14 +290,15 @@
 		</div>
 		<div class="ui tab" data-tab="tab-ttn">
 			<div class="ui raised very padded text container segment">
-				<div class="ui huge form">
+				<div class="ui huge form" id="ttn-form">
 					<div class="field">
 						<label>Введіть номер ТТН для перевірки</label>
-						<input placeholder="Введіть Ваш запит" type="text">
+						<input placeholder="Введіть Ваш запит" type="text" name="search_ttn">
 					</div>
 					<div class="ui large blue submit button">
 						<i class="search icon"></i> Пошук
 					</div>
+					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
 			<div class="ui raised very padded text container segment">
@@ -326,14 +308,15 @@
 		</div>
 		<div class="ui tab" data-tab="tab-birka">
 			<div class="ui raised very padded text container segment">
-				<div class="ui huge form">
+				<div class="ui huge form" id="birka-form">
 					<div class="field">
 						<label>Введіть номер бирки для перевірки</label>
-						<input placeholder="Введіть Ваш запит" type="text">
+						<input placeholder="Введіть Ваш запит" type="text" name="search_birka">
 					</div>
 					<div class="ui large blue submit button">
 						<i class="search icon"></i> Пошук
 					</div>
+					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
 			<div class="ui raised very padded text container segment">
@@ -341,13 +324,33 @@
 				<p>The dogs' value to early human hunter-gatherers led to them quickly becoming ubiquitous across world cultures. Dogs perform many roles for people, such as hunting, herding, pulling loads, protection, assisting police and military, companionship, and, more recently, aiding handicapped individuals. This impact on human society has given them the nickname "man's best friend" in the Western world. In some cultures, however, dogs are also a source of meat.</p>
 			</div>
 		</div>
-		<div class="ui vertical stripe segment">
-			<div class="ui text container">
-				<h3 class="ui header">Breaking The Grid, Grabs Your Attention</h3>
-				<p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
-				<a class="ui large button">Read More</a>
+		<div class="ui raised very padded text container segment" id="dumb_content">
+				<h3 class="ui header">Застосування табличного методу значно полегшує орієнтацію в матеріалі. </h3>
+				<p>Дані по введеному запиту буде відображено у наступному вигляді:</p>
+				<table class="ui compact celled collapsing unstackable striped table" id="results_table">
+					<thead>
+						<tr>
+							<th>Header</th>
+							<th>Header</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Cell</td>
+							<td>Cell</td>
+						</tr>
+						<tr>
+							<td>Cell</td>
+							<td>Cell</td>
+						</tr>
+						<tr>
+							<td>Cell</td>
+							<td>Cell</td>
+						</tr>
+					</tbody>
+				</table>
 				<h4 class="ui horizontal header divider">
-		        <a href="#">До уваги</a>
+		        		<a href="#">ДО УВАГИ</a>
 		      </h4>
 				<div class="ui info message">
 					<i class="close icon"></i>
@@ -359,7 +362,6 @@
 						<li>Сервіс на данний момент працює з БД, наповненою тестовими даними</li>
 					</ul>
 				</div>
-			</div>
 		</div>
 		<div class="ui inverted vertical footer segment">
 			<div class="ui container">
