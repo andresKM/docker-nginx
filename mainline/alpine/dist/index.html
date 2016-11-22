@@ -54,13 +54,24 @@
 			}
 
 		});
-		Offline.options = {checks: {image: {url: 'http://www.proderevo.info/favicon.ico'}, active: 'image'}};
+		Offline.options = {
+			checks: {
+				image: {
+					url: 'http://www.proderevo.info/favicon.ico'
+				},
+				active: 'image'
+			}
+		};
 		Offline.check();
 		$('.message .close').on('click', function() {
 			$(this).closest('.message').hide();
 			$(".ui.horizontal.divider").hide();
 		});
 
+		var query = Modernizr.mq('(min-width: 400px)');
+		if (!query) {
+			$(".form > .button").removeClass("large").addClass("small");
+		}
 
 
 		$.fn.submit_car = function() {
@@ -74,7 +85,8 @@
 				var hits = body.hits.hits;
 				console.log(hits);
 				$("#results_table_car > table").hide();
-				$.fn.renderJson ("#results_table_car",hits);
+				$("#results_table_car > h4").hide();
+				$.fn.renderJson("#results_table_car", hits);
 			}, function(error) {
 				console.trace(error.message);
 			});
@@ -169,7 +181,8 @@
 		});
 
 		$.fn.makeTable = function(mydata) {
-			var table = $('<table class="ui compact celled collapsing unstackable striped table results_table">');
+			// var table = $('<table class="ui compact celled collapsing unstackable striped table results_table">');
+			var table = $('<table class="ui compact celled collapsing striped table results_table">');
 			// $.each(mydata, function(index, value) {
 			// 	var TableRow = "<tr>";
 			// 	$.each(value, function(key, val) {
@@ -180,50 +193,50 @@
 			// });
 			var TableRow = "<tr>";
 			TableRow += "<td>Дата ТТН:</td>";
-			TableRow += "<td>"+mydata.date_send+"</td>";
+			TableRow += "<td>" + mydata.date_send + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Серія, номер ТТН:</td>";
-			TableRow += "<td>"+mydata.ttn+"</td>";
+			TableRow += "<td>" + mydata.ttn + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Вантажоперевізник:</td>";
-			TableRow += "<td>"+mydata.transporter_fop+"</td>";
+			TableRow += "<td>" + mydata.transporter_fop + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Держ.номер авто:</td>";
-			TableRow += "<td>"+mydata.car_number+"</td>";
+			TableRow += "<td>" + mydata.car_number + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Пункт навантаження:</td>";
-			TableRow += "<td>"+mydata.dest_place+"</td>";
+			TableRow += "<td>" + mydata.dest_place + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Пункт розвантаження:</td>";
-			TableRow += "<td>"+mydata.arrival_place+"</td>";
+			TableRow += "<td>" + mydata.arrival_place + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Вантажоодержувач</td>";
-			TableRow += "<td>"+mydata.cargo_taker+"</td>";
+			TableRow += "<td>" + mydata.cargo_taker + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
-			TableRow += "<td>"+mydata.sortument1+"</td>";
-			TableRow += "<td>"+mydata.number1+"</td>";
-			TableRow += "<td>"+mydata.volume1+"</td>";
+			TableRow += "<td>" + mydata.sortument1 + "</td>";
+			TableRow += "<td>" + mydata.number1 + "</td>";
+			TableRow += "<td>" + mydata.volume1 + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
-			TableRow += "<td>"+mydata.sortument2+"</td>";
-			TableRow += "<td>"+mydata.number2+"</td>";
-			TableRow += "<td>"+mydata.volume2+"</td>";
+			TableRow += "<td>" + mydata.sortument2 + "</td>";
+			TableRow += "<td>" + mydata.number2 + "</td>";
+			TableRow += "<td>" + mydata.volume2 + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
-			TableRow += "<td>"+mydata.sortument3+"</td>";
-			TableRow += "<td>"+mydata.number3+"</td>";
-			TableRow += "<td>"+mydata.volume3+"</td>";
+			TableRow += "<td>" + mydata.sortument3 + "</td>";
+			TableRow += "<td>" + mydata.number3 + "</td>";
+			TableRow += "<td>" + mydata.volume3 + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
-			TableRow += "<td>"+mydata.sortument4+"</td>";
-			TableRow += "<td>"+mydata.number4+"</td>";
-			TableRow += "<td>"+mydata.volume4+"</td>";
+			TableRow += "<td>" + mydata.sortument4 + "</td>";
+			TableRow += "<td>" + mydata.number4 + "</td>";
+			TableRow += "<td>" + mydata.volume4 + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
-			TableRow += "<td>"+mydata.sortument5+"</td>";
-			TableRow += "<td>"+mydata.number5+"</td>";
-			TableRow += "<td>"+mydata.volume5+"</td>";
+			TableRow += "<td>" + mydata.sortument5 + "</td>";
+			TableRow += "<td>" + mydata.number5 + "</td>";
+			TableRow += "<td>" + mydata.volume5 + "</td>";
 			TableRow += "</tr>";
 
 			$(table).append(TableRow);
@@ -232,12 +245,12 @@
 
 		$.fn.renderJson = function(sel, data) {
 			//var mydata = eval(data);
-			$.each(data, function (idx, obj) {
+			$.each(data, function(idx, obj) {
 				console.log(obj._source);
 				var table = $.fn.makeTable(obj._source);
-				$(table).appendTo(sel);   
+				$(table).appendTo(sel);
 			});
-			
+
 		};
 
 
@@ -286,14 +299,22 @@
 						<label>Введіть номер авто для перевірки</label>
 						<input placeholder="Введіть Ваш запит" type="text" name="search_car">
 					</div>
+					<!-- <div class="ui buttons">
+						<div class="ui large blue submit button">
+							<i class="search icon"></i> Пошук
+						</div>
+						<div class="ui large yellow right floated clear button">Зкинути</div>
+					</div> -->
 					<div class="ui large blue submit button">
 						<i class="search icon"></i> Пошук
 					</div>
 					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
-			<div class="ui raised very padded text container segment" id="results_table_car">
-				
+			<div class="ui raised text container segment" id="results_table_car">
+				<h4 class="ui header center aligned grey">
+					Тут будуть відображені результати пошуку
+				</h4>
 			</div>
 		</div>
 		<div class="ui tab" data-tab="tab-ttn">
@@ -310,7 +331,9 @@
 				</div>
 			</div>
 			<div class="ui raised very padded text container segment" id="results_table_ttn">
-				
+				<h4 class="ui header center aligned grey">
+					Тут будуть відображені результати пошуку
+				</h4>
 			</div>
 		</div>
 		<div class="ui tab" data-tab="tab-birka">
@@ -327,7 +350,9 @@
 				</div>
 			</div>
 			<div class="ui raised very padded text container segment" id="results_table_birka">
-				
+				<h4 class="ui header center aligned grey">
+					Тут будуть відображені результати пошуку
+				</h4>
 			</div>
 		</div>
 		<div class="ui raised very padded text container segment" id="dumb_content">
