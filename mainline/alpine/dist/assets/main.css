@@ -163,6 +163,9 @@
 #results_table {
 	margin: 0 auto;
 }
+.results_table {
+	margin: 0 auto !important;
+}
 .ui.divider {
 	margin: 3em 0;
 }

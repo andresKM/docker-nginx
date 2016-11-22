@@ -9,39 +9,14 @@
 	<!-- Site Properties -->
 	<title>Головна сторінка тестового сервісу перевірки деревини - FSC</title>
 	<link rel="stylesheet" type="text/css" href="dist/semantic.css">
-	<!-- <link rel="stylesheet" type="text/css" href="dist/components/reset.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/site.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/container.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/grid.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/header.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/image.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/menu.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/divider.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/segment.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/button.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/list.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/icon.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/sidebar.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/tab.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/form.css">
-	<link rel="stylesheet" type="text/css" href="dist/components/message.css"> -->
 	<link rel="stylesheet" type="text/css" href="assets/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/offline-theme-default.css">
 	<link rel="stylesheet" type="text/css" href="assets/offline-language-ua.css">
-	<!-- <link rel="stylesheet" type="text/css" href="dist/components/transition.css"> -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script> -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 	<script src="assets/jquery.min.js"></script>
-	<!-- <script src="dist/components/visibility.js"></script>
-	<script src="dist/components/sidebar.js"></script>
-	<script src="dist/components/tab.js"></script>
-	<script src="dist/components/form.js"></script> -->
 	<script src="dist/semantic.js"></script>
 	<script src="assets/modernizr.min.js"></script>
 	<script src="assets/offline.min.js"></script>
 	<script src="assets/elasticsearch.jquery.min.js"></script>
-	<!-- <script src="assets/offline-simulate-ui.min.js"></script> -->
-	<!-- <script src="dist/components/transition.js"></script> -->
 	<script>
 	var client = new $.es.Client({
 		host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
@@ -79,7 +54,7 @@
 			}
 
 		});
-		//Offline.options = {checks: {image: {url: 'http://www.proderevo.info/favicon.ico'}, active: 'image'}};
+		Offline.options = {checks: {image: {url: 'http://www.proderevo.info/favicon.ico'}, active: 'image'}};
 		Offline.check();
 		$('.message .close').on('click', function() {
 			$(this).closest('.message').hide();
@@ -89,19 +64,17 @@
 
 
 		$.fn.submit_car = function() {
-			console.log("sbmt");
-			/*var formData = {
-				field1: getFieldValue('search_car')
-			}*/
-			//send search to elastic
 			var qq = $("#car-form").form('get field', "search_car").val();
 			client.search({
 				index: 'fsc',
-				q: "car_number:"+qq,
+				// q: "car_number:"+qq,
+				q: qq,
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
 				console.log(hits);
+				$("#results_table_car > table").hide();
+				$.fn.renderJson ("#results_table_car",hits);
 			}, function(error) {
 				console.trace(error.message);
 			});
@@ -111,14 +84,11 @@
 		};
 
 		$.fn.submit_ttn = function() {
-			console.log("sbmt");
-			/*var formData = {
-				field1: getFieldValue('search_car')
-			}*/
 			var qq = $("#ttn-form").form('get field', "search_ttn").val();
 			client.search({
 				index: 'fsc',
-				q: "ttn:"+qq,
+				//q: "ttn:"+qq,
+				q: qq,
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
@@ -131,10 +101,6 @@
 
 
 		$.fn.submit_birka = function() {
-			console.log("sbmt");
-			/*var formData = {
-				field1: getFieldValue('search_car')
-			}*/
 			var qq = $("#birka-form").form('get field', "search_birka").val();
 			client.search({
 				index: 'fsc',
@@ -152,11 +118,11 @@
 
 
 		$('#car-form .submit.button').on('click', function() {
-			$.fn.submit_car ();
+			$.fn.submit_car();
 		});
 
 		$('#birka-form-form .submit.button').on('click', function() {
-			$.fn.submit_birka ();
+			$.fn.submit_birka();
 		});
 
 		$('#ttn-form .submit.button').on('click', function() {
@@ -169,25 +135,20 @@
 
 		$('#car-form').form({
 			fields: {
-				// search_car: 'empty'
 				search_car: {
 					identifier: 'search_car',
 					rules: [{
 						type: 'empty'
 					}]
 				}
-				// onSuccess: function() {
-				// 	$.fn.submit_car();
-				// }
 			}
 		});
 
-		
+
 
 		$('#ttn-form').form({
 			fields: {
-				// search_car: 'empty'
-				search_car: {
+				search_ttn: {
 					identifier: 'search_ttn',
 					rules: [{
 						type: 'empty'
@@ -198,8 +159,7 @@
 
 		$('#birka-form').form({
 			fields: {
-				// search_car: 'empty'
-				search_car: {
+				search_birka: {
 					identifier: 'search_birka',
 					rules: [{
 						type: 'empty'
@@ -209,27 +169,76 @@
 		});
 
 		$.fn.makeTable = function(mydata) {
-			var table = $('<table >');
-			var tblHeader = "<tr>";
-			for (var k in mydata[0]) tblHeader += "<th>" + k + "</th>";
-			tblHeader += "</tr>";
-			$(tblHeader).appendTo(table);
-			$.each(mydata, function(index, value) {
-				var TableRow = "<tr>";
-				$.each(value, function(key, val) {
-					TableRow += "<td>" + val + "</td>";
-				});
-				TableRow += "</tr>";
-				$(table).append(TableRow);
-			});
+			var table = $('<table class="ui compact celled collapsing unstackable striped table results_table">');
+			// $.each(mydata, function(index, value) {
+			// 	var TableRow = "<tr>";
+			// 	$.each(value, function(key, val) {
+			// 		TableRow += "<td>" + val + "</td>";
+			// 	});
+			// 	TableRow += "</tr>";
+			// 	$(table).append(TableRow);
+			// });
+			var TableRow = "<tr>";
+			TableRow += "<td>Дата ТТН:</td>";
+			TableRow += "<td>"+mydata.date_send+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Серія, номер ТТН:</td>";
+			TableRow += "<td>"+mydata.ttn+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Вантажоперевізник:</td>";
+			TableRow += "<td>"+mydata.transporter_fop+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Держ.номер авто:</td>";
+			TableRow += "<td>"+mydata.car_number+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Пункт навантаження:</td>";
+			TableRow += "<td>"+mydata.dest_place+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Пункт розвантаження:</td>";
+			TableRow += "<td>"+mydata.arrival_place+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Вантажоодержувач</td>";
+			TableRow += "<td>"+mydata.cargo_taker+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
+			TableRow += "<td>"+mydata.sortument1+"</td>";
+			TableRow += "<td>"+mydata.number1+"</td>";
+			TableRow += "<td>"+mydata.volume1+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
+			TableRow += "<td>"+mydata.sortument2+"</td>";
+			TableRow += "<td>"+mydata.number2+"</td>";
+			TableRow += "<td>"+mydata.volume2+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
+			TableRow += "<td>"+mydata.sortument3+"</td>";
+			TableRow += "<td>"+mydata.number3+"</td>";
+			TableRow += "<td>"+mydata.volume3+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
+			TableRow += "<td>"+mydata.sortument4+"</td>";
+			TableRow += "<td>"+mydata.number4+"</td>";
+			TableRow += "<td>"+mydata.volume4+"</td>";
+			TableRow += "</tr>";
+			TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
+			TableRow += "<td>"+mydata.sortument5+"</td>";
+			TableRow += "<td>"+mydata.number5+"</td>";
+			TableRow += "<td>"+mydata.volume5+"</td>";
+			TableRow += "</tr>";
+
+			$(table).append(TableRow);
 			return ($(table));
 		};
 
-		$.fn.renderJson = function (sel,data) {
-			var mydata = eval(data);
-			var table = $.makeTable(mydata);
-			$(table).appendTo(sel);
-		};			
+		$.fn.renderJson = function(sel, data) {
+			//var mydata = eval(data);
+			$.each(data, function (idx, obj) {
+				console.log(obj._source);
+				var table = $.fn.makeTable(obj._source);
+				$(table).appendTo(sel);   
+			});
+			
+		};
 
 
 	});
@@ -283,9 +292,8 @@
 					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
-			<div class="ui raised very padded text container segment">
-				<h2 class="ui header">Humans with Dogs</h2>
-				<p>The dogs' value to early human hunter-gatherers led to them quickly becoming ubiquitous across world cultures. Dogs perform many roles for people, such as hunting, herding, pulling loads, protection, assisting police and military, companionship, and, more recently, aiding handicapped individuals. This impact on human society has given them the nickname "man's best friend" in the Western world. In some cultures, however, dogs are also a source of meat.</p>
+			<div class="ui raised very padded text container segment" id="results_table_car">
+				
 			</div>
 		</div>
 		<div class="ui tab" data-tab="tab-ttn">
@@ -325,43 +333,47 @@
 			</div>
 		</div>
 		<div class="ui raised very padded text container segment" id="dumb_content">
-				<h3 class="ui header">Застосування табличного методу значно полегшує орієнтацію в матеріалі. </h3>
-				<p>Дані по введеному запиту буде відображено у наступному вигляді:</p>
-				<table class="ui compact celled collapsing unstackable striped table" id="results_table">
-					<thead>
-						<tr>
-							<th>Header</th>
-							<th>Header</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Cell</td>
-							<td>Cell</td>
-						</tr>
-						<tr>
-							<td>Cell</td>
-							<td>Cell</td>
-						</tr>
-						<tr>
-							<td>Cell</td>
-							<td>Cell</td>
-						</tr>
-					</tbody>
-				</table>
-				<h4 class="ui horizontal header divider">
+			<h3 class="ui header">Застосування табличного методу значно полегшує орієнтацію в матеріалі. </h3>
+			<p>Дані по введеному запиту буде відображено у наступному вигляді:</p>
+			<table class="ui compact celled collapsing unstackable striped table results_table">
+				<thead>
+					<tr>
+						<th>Header</th>
+						<th>Header</th>
+						<th>Header</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Cell</td>
+						<td>Cell</td>
+						<td>Cell</td>
+					</tr>
+					<tr>
+						<td>Cell</td>
+						<td>Cell</td>
+						<td>Cell</td>
+					</tr>
+					<tr>
+						<td>Cell</td>
+						<td>Cell</td>
+						<td>Cell</td>
+					</tr>
+				</tbody>
+			</table>
+			<h4 class="ui horizontal header divider">
 		        		<a href="#">ДО УВАГИ</a>
 		      </h4>
-				<div class="ui info message">
-					<i class="close icon"></i>
-					<div class="header">
-						Прийміть до уваги наступне:
-					</div>
-					<ul class="list">
-						<li>Наголошуємо, що сервіс працює у тестовому режимі</li>
-						<li>Сервіс на данний момент працює з БД, наповненою тестовими даними</li>
-					</ul>
+			<div class="ui info message">
+				<i class="close icon"></i>
+				<div class="header">
+					Прийміть до уваги наступне:
 				</div>
+				<ul class="list">
+					<li>Наголошуємо, що сервіс працює у тестовому режимі</li>
+					<li>Сервіс на данний момент працює з БД, наповненою тестовими даними</li>
+				</ul>
+			</div>
 		</div>
 		<div class="ui inverted vertical footer segment">
 			<div class="ui container">

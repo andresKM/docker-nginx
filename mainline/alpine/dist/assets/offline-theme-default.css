@@ -317,7 +317,7 @@
   border-radius: 4px;
   font-family: "Helvetica Neue", sans-serif;
   padding: 1em;
-  top: 1em;
+  top: 12em;
   width: 38em;
   max-width: 100%;
   overflow: hidden;
@@ -330,7 +330,7 @@
     -ms-border-radius: 0;
     -o-border-radius: 0;
     border-radius: 0;
-    top: 0;
+    top: 12em;
   }
 }
 /* line 34, ../sass/offline-theme-default.sass */
