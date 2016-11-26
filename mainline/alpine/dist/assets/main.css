@@ -104,18 +104,15 @@
 	}
 }
 
-.no-js #loader {
+.no-js #start-dimmer {
 	display: none;
 }
 
-.js #loader {
-	display: block;
-	position: absolute;
-	left: 100px;
-	top: 0;
+.js #start-dimmer {
+	
 }
 
-.se-pre-con {
+/*.se-pre-con {
 	position: fixed;
 	left: 0px;
 	top: 0px;
@@ -124,7 +121,7 @@
 	z-index: 9999;
 	display: block;
 	background: url(../assets/preloader_1.gif) center no-repeat #fff;
-}
+}*/
 
 #sidebar-menu {}
 

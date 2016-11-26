@@ -45,12 +45,16 @@
 			//$("#main-menu").removeClass(".masthead .segment");
 			//$("#main-menu").addClass("main-menu-slim");
 
+			$('#sidebar-menu').sidebar('show');;
+
 			//make here a ping call to db
 		});
-		$(".se-pre-con").fadeOut(3500);
+		$("#start-dimmer").fadeOut(2300);
 		$('.tabular.menu .item').tab({
 			onFirstLoad: function() {
-				$("#jumbo_button").click();
+				$("#jumbo").hide();
+				$(".masthead.segment").css("height", "80px");
+				$(".masthead.segment").css("min-height", "80px");
 			}
 
 		});
@@ -77,15 +81,16 @@
 		$.fn.submit_car = function() {
 			var qq = $("#car-form").form('get field', "search_car").val();
 			client.search({
-				index: 'fsc',
-				// q: "car_number:"+qq,
-				q: qq,
+				"index": 'fsc',
+				q: "car_number:*"+qq+"*",
+				//"q": "*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
 				console.log(hits);
 				$("#results_table_car > table").hide();
 				$("#results_table_car > h4").hide();
+				$('#results_table_car').removeClass("loading");
 				$.fn.renderJson("#results_table_car", hits);
 			}, function(error) {
 				console.trace(error.message);
@@ -99,12 +104,16 @@
 			var qq = $("#ttn-form").form('get field', "search_ttn").val();
 			client.search({
 				index: 'fsc',
-				//q: "ttn:"+qq,
-				q: qq,
+				q: "ttn:*"+qq+"*",
+				//"q": "*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
 				console.log(hits);
+				$("#results_table_ttn > table").hide();
+				$("#results_table_ttn > h4").hide();
+				$('#results_table_ttn').removeClass("loading");
+				$.fn.renderJson("#results_table_ttn", hits);
 			}, function(error) {
 				console.trace(error.message);
 			});
@@ -116,11 +125,15 @@
 			var qq = $("#birka-form").form('get field', "search_birka").val();
 			client.search({
 				index: 'fsc',
-				q: qq,
+				"q": "*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
 				console.log(hits);
+				$("#results_table_birka > table").hide();
+				$("#results_table_birka > h4").hide();
+				$('#results_table_birka').removeClass("loading");
+				$.fn.renderJson("#results_table_birka", hits);
 			}, function(error) {
 				console.trace(error.message);
 			});
@@ -130,14 +143,17 @@
 
 
 		$('#car-form .submit.button').on('click', function() {
+			$('#results_table_car').addClass("loading");
 			$.fn.submit_car();
 		});
 
 		$('#birka-form-form .submit.button').on('click', function() {
+			$('#results_table_birka').addClass("loading");
 			$.fn.submit_birka();
 		});
 
 		$('#ttn-form .submit.button').on('click', function() {
+			$('#results_table_ttn').addClass("loading");
 			$.fn.submit_ttn();
 		});
 
@@ -181,7 +197,6 @@
 		});
 
 		$.fn.makeTable = function(mydata) {
-			// var table = $('<table class="ui compact celled collapsing unstackable striped table results_table">');
 			var table = $('<table class="ui compact celled collapsing striped table results_table">');
 			// $.each(mydata, function(index, value) {
 			// 	var TableRow = "<tr>";
@@ -259,7 +274,11 @@
 </head>
 
 <body>
-	<div class="se-pre-con"></div>
+	<!-- <div class="se-pre-con"></div> -->
+	<div class="ui active dimmer" id="start-dimmer">
+		<div class="ui large text loader">Завантаження</div>
+	</div>
+	
 	<!-- Sidebar Menu -->
 	<div class="ui vertical inverted sidebar menu tabular" id="sidebar-menu">
 		<a class="active item">Головна</a>
@@ -311,7 +330,7 @@
 					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
-			<div class="ui raised text container segment" id="results_table_car">
+			<div class="ui raised text padded container segment" id="results_table_car">
 				<h4 class="ui header center aligned grey">
 					Тут будуть відображені результати пошуку
 				</h4>
@@ -330,7 +349,7 @@
 					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
-			<div class="ui raised very padded text container segment" id="results_table_ttn">
+			<div class="ui raised text padded container segment" id="results_table_ttn">
 				<h4 class="ui header center aligned grey">
 					Тут будуть відображені результати пошуку
 				</h4>
@@ -349,7 +368,7 @@
 					<div class="ui large yellow right floated clear button">Зкинути</div>
 				</div>
 			</div>
-			<div class="ui raised very padded text container segment" id="results_table_birka">
+			<div class="ui raised text padded container segment" id="results_table_birka">
 				<h4 class="ui header center aligned grey">
 					Тут будуть відображені результати пошуку
 				</h4>
