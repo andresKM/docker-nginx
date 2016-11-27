@@ -129,12 +129,12 @@
 				//q: "*"+qq+"*",
 				//q: "birka1:*"+qq+"*OR"+"birka2:*"+qq+"*OR"+"birka3:*"+qq+"*OR"+"birka4:*"+qq+"*OR"+"birka5:*"+qq+"*",
 				body: {
-					    "query": {
-					        "query_string" : {
-					            "fields" : ["birka1", "birka2","birka3","birka4","birka5"],
-					            "query" : "*"+qq +"*"
-					        }
-					    }
+					"query": {
+						"query_string": {
+							"fields": ["birka1", "birka2", "birka3", "birka4", "birka5"],
+							"query": "*" + qq + "*"
+						}
+					}
 				},
 				//q: "birka*:*"+qq+"*",
 				size: 1
@@ -230,7 +230,7 @@
 			TableRow += "<tr><td>Водій:</td>";
 			TableRow += "<td>" + mydata.driver_pib + "</td>";
 			TableRow += "</tr>";
-			TableRow += "<tr><td>Держ.номер авто:</td>";
+			TableRow += "<tr><td>Держ. номер авто:</td>";
 			TableRow += "<td>" + mydata.car_number + "</td>";
 			TableRow += "</tr>";
 			TableRow += "<tr><td>Пункт навантаження:</td>";
@@ -253,7 +253,7 @@
 			TableRow += "<td class='cell-wrap'>" + mydata.birka1 + "</td>";
 			TableRow += "</tr>";
 
-			if (mydata.number2 !="") {
+			if (mydata.number2 != "") {
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
 				TableRow += "<td>" + mydata.sortument2 + "</td>";
 				TableRow += "<td>" + mydata.number2 + "</td>";
@@ -266,7 +266,7 @@
 
 			} else {}
 
-			
+
 			if (mydata.number3 != "") {
 
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
@@ -274,7 +274,7 @@
 				TableRow += "<td>" + mydata.number3 + "</td>";
 				TableRow += "<td>" + mydata.volume3 + "</td>";
 				TableRow += "</tr>";
-				
+
 				TableRow += "<tr><td>Номери бирок:</td>";
 				TableRow += "<td class='cell-wrap'>" + mydata.birka3 + "</td>";
 				TableRow += "</tr>";
@@ -338,7 +338,7 @@
 		<a class="active item">Головна</a>
 		<a class="item" data-tab="tab-car">Пошук по авто</a>
 		<a class="item" data-tab="tab-ttn">Пошук по ТТН</a>
-		<a class="item" data-tab="tab-birka">Пошук по бірці</a>
+		<a class="item" data-tab="tab-birka">Пошук по бирці</a>
 		<a class="item" data-tab="tab-input">Внести дані</a>
 	</div>
 	<!-- Page Contents -->
@@ -352,7 +352,8 @@
 					<a class="active item">Головна</a>
 					<a class="item" data-tab="tab-car">Пошук по авто</a>
 					<a class="item" data-tab="tab-ttn">Пошук по ТТН</a>
-					<a class="item" data-tab="tab-birka">Пошук по бірці</a>
+					<a class="item" data-tab="tab-birka">Пошук по бирці</a>
+					<a class="item" data-tab="tab-input">Внести дані</a>
 					<div class="right item">
 						<a class="ui inverted button">Як користуватися</a>
 					</div>
@@ -431,16 +432,102 @@
 		</div>
 		<div class="ui tab" data-tab="tab-input">
 			<div class="ui raised very padded text container segment">
-				<div class="ui huge form" id="input-form">
+				<form class="ui form">
+					<h4 class="ui dividing header">Дані по ТТН-ліс</h4>
+					<div class="two fields">
+						<div class="field">
+							<label>Дата ТТН</label>
+							<input type="text" name="input-form-date_send" placeholder="4/15/2015 12:00">
+						</div>
+						<div class="field">
+							<label>Серія, номер ТТН</label>
+							<input type="text" name="input-form-ttn" placeholder="ООО000220">
+						</div>
+					</div>
 					<div class="field">
-						<label>Введіть номер бирки для перевірки</label>
-						<input placeholder="Введіть Ваш запит" type="text" name="search_birka">
+						<label>Вантажоперевізник</label>
+						<div class="field">
+							<input type="text" name="input-form-transporter_fop" placeholder="Введіть назву/ПІБ">
+						</div>
+					</div>
+					<div class="field">
+						<label>Водій</label>
+						<select class="ui fluid dropdown" name="input-form-driver_pib">
+							<option value="">Оберіть водія</option>
+							<option value="Савицький Костянтин Павлович">Савицький Костянтин Павлович</option>
+							<option value="Бутько Ростислав Федорович">Бутько Ростислав Федорович</option>
+							<option value="Гриневський Ілля Андрійович">Гриневський Ілля Андрійович</option>
+							<option value="Бердник Валерій Олександрович">Бердник Валерій Олександрович</option>
+							<option value="Ломовий Сергій Миколайович">Ломовий Сергій Миколайович</option>
+							<option value="Чорний Орест Станіславович">Чорний Орест Станіславович</option>
+							<option value="Родименко Петро Васильвич">Родименко Петро Васильвич</option>
+							<option value="Горбач Ярослав Андрійович">Горбач Ярослав Андрійович</option>
+						</select>
+					</div>
+					<div class="field">
+						<label>Держ. номер авто</label>
+						<div class="field">
+							<input type="text" name="input-form-car_number" placeholder="Введіть номер авто">
+						</div>
+					</div>
+					<div class="field">
+						<label>Пункт навантаження</label>
+						<div class="field">
+							<input type="text" name="input-form-dest_place" placeholder="Введіть пункт навантаження">
+						</div>
+					</div>
+					<div class="field">
+						<label>Пункт розвантаження</label>
+						<div class="field">
+							<input type="text" name="input-form-arrival_place" placeholder="Введіть пункт розвантаження">
+						</div>
+					</div>
+					<div class="field">
+						<label>Вантажоодержувач</label>
+						<div class="field">
+							<input type="text" name="input-form-cargo_taker" placeholder="Введіть назву/ПІБ">
+						</div>
+					</div>
+					<div class="fields">
+						<div class="seven wide field">
+							<label>Сортимент</label>
+							<input type="text" name="input-form-sortument1" maxlength="16" placeholder="Сортимент">
+						</div>
+						<div class="three wide field">
+							<label>Кількість</label>
+							<input type="text" name="input-form-number1" maxlength="3" placeholder="Кількість">
+						</div>
+						<div class="six wide field">
+							<label>Об'єм</label>
+							<div class="field">
+								<input type="text" name="input-form-volume1" maxlength="4" placeholder="Об'єм">
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<label>Номери бирок</label>
+						<div class="field">
+							<textarea rows="3" name="input-form-birka1"  placeholder="Введіть номери бирок"></textarea>
+						</div>
+					</div>
+					<div class="four wide centered field">
+						<label for="file" class="ui icon button">
+							<i class="file icon"></i> Додати фото ТТН
+						</label>
+						<input type="file" name="input-form-ttn_foto" id="new-file" style="display: none;">
+					</div>
+					<div class="inline field">
+						<div class="ui checkbox">
+							<input name="terms" type="checkbox">
+							<label>Погоджуюся з правильністю введених даних</label>
+						</div>
 					</div>
 					<div class="ui large blue submit button">
-						<i class="search icon"></i> Пошук
+						Внести дані
+						<!-- <i class="right arrow icon"></i> -->
 					</div>
 					<div class="ui large yellow right floated clear button">Зкинути</div>
-				</div>
+				</form>
 			</div>
 			<div class="ui raised text padded container segment" id="results_table_input">
 				<h4 class="ui header center aligned grey">
@@ -451,7 +538,7 @@
 		<div class="ui raised very padded text container segment" id="dumb_content">
 			<h3 class="ui header">Застосування табличного методу значно полегшує орієнтацію в матеріалі. </h3>
 			<p>Дані по введеному запиту буде відображено у наступному вигляді:</p>
-			<table class="ui compact celled collapsing unstackable striped table results_table">
+			<table class="ui compact celled collapsing unstackable striped table dumb_content_table">
 				<thead>
 					<tr>
 						<th>Header</th>

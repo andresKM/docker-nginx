@@ -119,7 +119,7 @@
 	.ui.table tr td.cell-wrap {
 		word-wrap: break-word;
 	}
-	.ui.collapsing.table {
+	.ui.collapsing.table.results_table {
 		/*width: auto;*/
 		display: block;
 	}
@@ -194,8 +194,8 @@
 #dumb_content {
 	margin: 2em 0;
 }
-#results_table {
-	margin: 0 auto;
+.dumb_content_table {
+	margin: 0 auto !important;
 }
 .results_table {
 	margin: 0 auto !important;
