@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<!-- Site Properties -->
-	<title>Головна сторінка тестового сервісу перевірки деревини - FSC</title>
+	<title>Головна сторінка тестового сервісу перевірки деревини - www.proderevo.info</title>
 	<link rel="stylesheet" type="text/css" href="dist/semantic.css">
 	<link rel="stylesheet" type="text/css" href="assets/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/offline-theme-default.css">
@@ -15,58 +15,50 @@
 	<script src="assets/jquery.min.js"></script>
 	<script src="dist/semantic.js"></script>
 	<script src="assets/modernizr.min.js"></script>
-	<script src="assets/offline.min.js"></script>
 	<script src="assets/elasticsearch.jquery.min.js"></script>
+	<script src="assets/offline.min.js"></script>
 	<script>
 	var client = new $.es.Client({
 		host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
 	});
 
 	$(document).ready(function() {
-		// fix menu when passed
-		/*$('.masthead').visibility({
-			once: false,
-			onBottomPassed: function() {
-				// $('.fixed.menu').transition('fade in');
-				$('.fixed.menu');
+		Offline.options = {
+			checkOnLoad: false,
+			interceptRequests: false,
+			checks: {
+				//xhr: {url: 'http://www.proderevo.info/' }
+				image: {
+					url: 'http://www.proderevo.info/favicon.ico'
+				},
+				active: 'image'
 			},
-			onBottomPassedReverse: function() {
-				// $('.fixed.menu').transition('fade out');
-				$('.fixed.menu');
-			}
-		});*/
+			reconnect: {
+				initialDelay: 60
+			},
+			requests: true
+		};
+		Offline.check();
+
 		// create sidebar and attach to menu open
 		$('.ui.sidebar').sidebar('attach events', '.toc.item');
 
 		$("#jumbo_button").click(function() {
-			$("#jumbo").hide();
+			$("#jumbo").remove();
 			$(".masthead.segment").css("height", "80px");
 			$(".masthead.segment").css("min-height", "80px");
-			//$("#main-menu").removeClass(".masthead .segment");
-			//$("#main-menu").addClass("main-menu-slim");
-
 			$('#sidebar-menu').sidebar('show');;
 
-			//make here a ping call to db
 		});
 		$("#start-dimmer").fadeOut(2300);
 		$('.tabular.menu .item').tab({
 			onFirstLoad: function() {
-				$("#jumbo").hide();
+				$("#jumbo").remove();
 				$(".masthead.segment").css("height", "80px");
 				$(".masthead.segment").css("min-height", "80px");
 			}
 
 		});
-		Offline.options = {
-			checks: {
-				image: {
-					url: 'http://www.proderevo.info/favicon.ico'
-				},
-				active: 'image'
-			}
-		};
-		Offline.check();
 		$('.message .close').on('click', function() {
 			$(this).closest('.message').hide();
 			$(".ui.horizontal.divider").hide();
@@ -77,21 +69,32 @@
 			$(".form > .button").removeClass("large").addClass("small");
 		}
 
+		$("#new-file").on("click", function() {
+			$('#hidden-new-file').click();
+		});
+
 
 		$.fn.submit_car = function() {
 			var qq = $("#car-form").form('get field', "search_car").val();
 			client.search({
 				"index": 'fsc',
 				q: "car_number:*" + qq + "*",
-				//"q": "*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
-				console.log(hits);
-				$("#results_table_car > table").hide();
-				$("#results_table_car > h4").hide();
-				$('#results_table_car').removeClass("loading");
-				$.fn.renderJson("#results_table_car", hits);
+				if (hits != "" && hits != "undefined" && hits != null) {
+					console.log(hits);
+					$("#results_table_car > table").remove();
+					$("#results_table_car > h4").remove();
+					$('#results_table_car').removeClass("loading");
+					$.fn.renderJson("#results_table_car", hits);
+				} else {
+					var text_message = $("<h4 class='ui header center aligned grey'>За Вашим запитом відсутня інформація. Перевірте запит та з'єднання з мережею. Спробуйте ще.</h4>");
+					$("#results_table_car > table").remove();
+					$("#results_table_car > h4").remove();
+					$('#results_table_car').removeClass("loading");
+					$(text_message).appendTo("#results_table_car");
+				}
 			}, function(error) {
 				console.trace(error.message);
 			});
@@ -105,29 +108,31 @@
 			client.search({
 				index: 'fsc',
 				q: "ttn:*" + qq + "*",
-				//"q": "*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
-				console.log(hits);
-				$("#results_table_ttn > table").hide();
-				$("#results_table_ttn > h4").hide();
-				$('#results_table_ttn').removeClass("loading");
-				$.fn.renderJson("#results_table_ttn", hits);
+				if (hits != "" && hits != "undefined" && hits != null) {
+					console.log(hits);
+					$("#results_table_ttn > table").remove();
+					$("#results_table_ttn > h4").remove();
+					$('#results_table_ttn').removeClass("loading");
+					$.fn.renderJson("#results_table_ttn", hits);
+				} else {
+					var text_message = $("<h4 class='ui header center aligned grey'>За Вашим запитом відсутня інформація. Перевірте запит та з'єднання з мережею. Спробуйте ще.</h4>");
+					$("#results_table_ttn > table").remove();
+					$("#results_table_ttn > h4").remove();
+					$('#results_table_ttn').removeClass("loading");
+					$(text_message).appendTo("#results_table_ttn");
+				}
 			}, function(error) {
 				console.trace(error.message);
 			});
-
 		};
-
 
 		$.fn.submit_birka = function() {
 			var qq = $("#birka-form").form('get field', "search_birka").val();
 			client.search({
 				index: 'fsc',
-				//field:["birka1","birka2","birka3","birka4","birka5"],
-				//q: "*"+qq+"*",
-				//q: "birka1:*"+qq+"*OR"+"birka2:*"+qq+"*OR"+"birka3:*"+qq+"*OR"+"birka4:*"+qq+"*OR"+"birka5:*"+qq+"*",
 				body: {
 					"query": {
 						"query_string": {
@@ -136,22 +141,113 @@
 						}
 					}
 				},
-				//q: "birka*:*"+qq+"*",
 				size: 1
 			}).then(function(body) {
 				var hits = body.hits.hits;
-				console.log(hits);
-				$("#results_table_birka > table").hide();
-				$("#results_table_birka > h4").hide();
-				$('#results_table_birka').removeClass("loading");
-				$.fn.renderJson("#results_table_birka", hits);
+				if (hits != "" && hits != "undefined" && hits != null) {
+					console.log(hits);
+					$("#results_table_birka > table").remove();
+					$("#results_table_birka > h4").remove();
+					$('#results_table_birka').removeClass("loading");
+					$.fn.renderJson("#results_table_birka", hits);
+				} else {
+					var text_message = $("<h4 class='ui header center aligned grey'>За Вашим запитом відсутня інформація. Перевірте запит та з'єднання з мережею. Спробуйте ще.</h4>");
+					$("#results_table_birka > table").remove();
+					$("#results_table_birka > h4").remove();
+					$('#results_table_birka').removeClass("loading");
+					$(text_message).appendTo("#results_table_birka");
+				}
 			}, function(error) {
 				console.trace(error.message);
 			});
 
 		};
 
+		$.fn.submit_input = function() {
+			//console.log(qq);
+			//var myFile = $('#hidden-new-file').prop('files');
+			//console.log(myFile);
+			var file_bin = "";
+			//file_after_bin = Base64.encode64(file_after_bin);
 
+			if (!window.FileReader) {
+				alert('FileReader API не підтримується браузером.');
+			}
+			var $i = $('#hidden-new-file'), // Put file input ID here
+				input = $i[0]; // Getting the element from jQuery
+			//var file_before_bin;
+			if (input.files && input.files[0]) {
+				var file = input.files[0]; // The file
+				var reader = new FileReader(); // FileReader instance
+				reader.readAsDataURL(file);
+				reader.onload = function() {
+					// Do stuff on onload, use reader.result for contents of file
+					file_bin = reader.result;
+					$.fn.submit_send(file_bin);
+				};
+			} else {
+				alert("Файл не обрано або несумісний браузер.");
+				console.log("else clause in FileReader");
+			}
+		}
+
+
+		$.fn.submit_send = function(file_bin) {
+
+			console.log(file_bin);
+			client.index({
+				index: 'fsc',
+				type: 'eod',
+				body: {
+					date_send: $("#input-form").form('get field', "input-form-date_send").val(),
+					ttn: $("#input-form").form('get field', "input-form-ttn").val(),
+					transporter_fop: $("#input-form").form('get field', "input-form-transporter_fop").val(),
+					driver_pib: $("#input-form").form('get field', "input-form-driver_pib").val(),
+					car_number: $("#input-form").form('get field', "input-form-car_number").val(),
+					dest_place: $("#input-form").form('get field', "input-form-dest_place").val(),
+					arrival_place: $("#input-form").form('get field', "input-form-arrival_place").val(),
+					cargo_taker: $("#input-form").form('get field', "input-form-cargo_taker").val(),
+					sortument1: $("#input-form").form('get field', "input-form-sortument1").val(),
+					number1: $("#input-form").form('get field', "input-form-number1").val(),
+					volume1: $("#input-form").form('get field', "input-form-volume1").val(),
+					birka1: $("#input-form").form('get field', "input-form-birka1").val(),
+					ttn_foto: "" + file_bin + ""
+				}
+			}).then(function(body) {
+				console.log(body);
+				$("#results_table_input > table").remove();
+				$("#results_table_input > h4").remove();
+				$('#results_table_input').removeClass("loading");
+
+				if (body.created == true) {
+					var table = $('<table class="ui compact celled collapsing striped table results_table">');
+					var TableRow = "<tr>";
+					TableRow += "<td>ID документу в БД:</td>";
+					TableRow += "<td>" + body._id + "</td>";
+					TableRow += "</tr>";
+					TableRow += "<tr><td>Стан транзакції:</td>";
+					TableRow += "<td>" + body.result + "</td>";
+					TableRow += "</tr>";
+
+					$(table).append(TableRow);
+					$(table).appendTo("#results_table_input");
+					/*$.each(data, function(idx, obj) {
+						console.log(obj._source);
+						var table = $.fn.makeTable(obj._source);
+						$(table).appendTo(sel);
+					});*/
+				} else {
+					console.log("Fail");
+					var text_message = $("<h4 class='ui header center aligned grey'>За Вашим запитом відсутня інформація. Перевірте запит та з'єднання з мережею. Спробуйте ще.</h4>");
+					$("#results_table_input > table").remove();
+					$("#results_table_input > h4").remove();
+					$('#results_table_input').removeClass("loading");
+					$(text_message).appendTo("#results_table_input");
+				}
+			}, function(error) {
+				console.trace(error.message);
+			});
+		}
 
 		$('#car-form .submit.button').on('click', function() {
 			$('#results_table_car').addClass("loading");
@@ -169,6 +265,10 @@
 		});
 
 
+		$('#input-form .submit.button').on('click', function() {
+			$('#results_table_input').addClass("loading");
+			$.fn.submit_input();
+		});
 
 
 
@@ -206,6 +306,122 @@
 				}
 			}
 		});
+
+		$('#input-form').form({
+			fields: {
+				"input-form-date_send": {
+					identifier: 'input-form-date_send',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-ttn": {
+					identifier: 'input-form-ttn',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-transporter_fop": {
+					identifier: 'input-form-transporter_fop',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-driver_pib": {
+					identifier: 'input-form-driver_pib',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-car_number": {
+					identifier: 'input-form-car_number',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-dest_place": {
+					identifier: 'input-form-dest_place',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-arrival_place": {
+					identifier: 'input-form-arrival_place',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-cargo_taker": {
+					identifier: 'input-form-cargo_taker',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-sortument1": {
+					identifier: 'input-form-sortument1',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-number1": {
+					identifier: 'input-form-number1',
+					rules: [{
+						type: "empty",
+					}]
+				},
+				"input-form-volume1": {
+					identifier: 'input-form-volume1',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				"input-form-birka1": {
+					identifier: 'input-form-birka1',
+					rules: [{
+						type: 'empty'
+					}]
+				},
+				/*"input-form-ttn_foto": {
+					identifier: 'input-form-ttn_foto',
+					rules: [{
+						type: ''
+					}]
+				},*/
+				"terms": {
+					identifier: 'terms',
+					rules: [{
+						type: 'checked'
+					}]
+				}
+			}
+		});
+
+		/*$.fn.loadFile = function(file_bin) {
+			
+			if ( ! window.FileReader ) {
+				alert( 'FileReader API не підтримується браузером.' );
+			}
+			var $i = $( '#hidden-new-file' ), // Put file input ID here
+				input = $i[0]; // Getting the element from jQuery
+			//var file_before_bin;
+			if ( input.files && input.files[0] ) {
+				var file = input.files[0]; // The file
+				var reader = new FileReader(); // FileReader instance
+				reader.readAsDataURL( file );
+				console.log(reader.result);
+				reader.onload = function () {
+					// Do stuff on onload, use reader.result for contents of file
+					file_bin=reader.result;
+					console.log(reader.result);
+					return file_bin;
+				};
+				//reader.readAsText( file );
+			} else {
+				// Handle errors here
+				alert( "Файл не обрано або несумісний браузер." );
+				console.log("else clause in FileReader");
+			}
+		}*/
 
 		$.fn.makeTable = function(mydata) {
 			var table = $('<table class="ui compact celled collapsing striped table results_table">');
@@ -253,7 +469,7 @@
 			TableRow += "<td class='cell-wrap'>" + mydata.birka1 + "</td>";
 			TableRow += "</tr>";
 
-			if (mydata.number2 != "") {
+			if (mydata.number2 != "" && mydata.number2 != null) {
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
 				TableRow += "<td>" + mydata.sortument2 + "</td>";
 				TableRow += "<td>" + mydata.number2 + "</td>";
@@ -267,7 +483,7 @@
 			} else {}
 
 
-			if (mydata.number3 != "") {
+			if (mydata.number3 != "" && mydata.number3 != null) {
 
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
 				TableRow += "<td>" + mydata.sortument3 + "</td>";
@@ -281,7 +497,7 @@
 
 			} else {}
 
-			if (mydata.number4 != "") {
+			if (mydata.number4 != "" && mydata.number4 != null) {
 
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
 				TableRow += "<td>" + mydata.sortument4 + "</td>";
@@ -295,7 +511,7 @@
 
 			} else {}
 
-			if (mydata.number5 != "") {
+			if (mydata.number5 != "" && mydata.number5 != null) {
 
 				TableRow += "<tr><td>Сортимент, кількість, об'єм:</td>";
 				TableRow += "<td>" + mydata.sortument5 + "</td>";
@@ -305,6 +521,14 @@
 
 				TableRow += "<tr><td>Номери бирок:</td>";
 				TableRow += "<td class='cell-wrap'>" + mydata.birka5 + "</td>";
+				TableRow += "</tr>";
+
+			} else {}
+
+			if (mydata.ttn_foto != "" && mydata.ttn_foto != "undefined" && mydata.ttn_foto != null) {
+				var image = $('<img src="' + mydata.ttn_foto + '"  alt="Фото ТТН" class="cell-image">');
+				TableRow += "<tr><td>Фото ТТН:</td>";
+				TableRow += "<td class='cell-image-td'>" + image[0].outerHTML + "</td>";
 				TableRow += "</tr>";
 
 			} else {}
@@ -329,7 +553,6 @@
 </head>
 
 <body>
-	<!-- <div class="se-pre-con"></div> -->
 	<div class="ui active dimmer" id="start-dimmer">
 		<div class="ui large text loader">Завантаження</div>
 	</div>
@@ -374,12 +597,6 @@
 						<label>Введіть номер авто для перевірки</label>
 						<input placeholder="Введіть Ваш запит" type="text" name="search_car">
 					</div>
-					<!-- <div class="ui buttons">
-						<div class="ui large blue submit button">
-							<i class="search icon"></i> Пошук
-						</div>
-						<div class="ui large yellow right floated clear button">Зкинути</div>
-					</div> -->
 					<div class="ui large blue submit button">
 						<i class="search icon"></i> Пошук
 					</div>
@@ -432,7 +649,7 @@
 		</div>
 		<div class="ui tab" data-tab="tab-input">
 			<div class="ui raised very padded text container segment">
-				<form class="ui form">
+				<div class="ui form" id="input-form">
 					<h4 class="ui dividing header">Дані по ТТН-ліс</h4>
 					<div class="two fields">
 						<div class="field">
@@ -507,14 +724,19 @@
 					<div class="field">
 						<label>Номери бирок</label>
 						<div class="field">
-							<textarea rows="3" name="input-form-birka1"  placeholder="Введіть номери бирок"></textarea>
+							<textarea rows="3" name="input-form-birka1" placeholder="Введіть номери бирок"></textarea>
 						</div>
 					</div>
-					<div class="four wide centered field">
-						<label for="file" class="ui icon button">
+					<!-- <div class="four wide centered field">
+							<label for="file" class="ui icon button" id="new-file">
+								<i class="file icon"></i> Додати фото ТТН
+							</label>
+						</div> -->
+					<div class="field">
+						<label for="file" style="/*float: left;width: 180px;margin: 1em 0em 1rem 0em;*/" id="new-file">
 							<i class="file icon"></i> Додати фото ТТН
 						</label>
-						<input type="file" name="input-form-ttn_foto" id="new-file" style="display: none;">
+						<input type="file" accept="image/jpeg,image/png" name="input-form-ttn_foto" class="ui button" id="hidden-new-file" style="/*display: none;*/">
 					</div>
 					<div class="inline field">
 						<div class="ui checkbox">
@@ -527,7 +749,7 @@
 						<!-- <i class="right arrow icon"></i> -->
 					</div>
 					<div class="ui large yellow right floated clear button">Зкинути</div>
-				</form>
+				</div>
 			</div>
 			<div class="ui raised text padded container segment" id="results_table_input">
 				<h4 class="ui header center aligned grey">
@@ -583,7 +805,7 @@
 				<div class="ui stackable inverted divided equal height stackable grid">
 					<div class="seven wide centered column">
 						<h3 class="ui inverted header">Звязок з адміністратором сайту: mail@proderevo.info</h3>
-						<!-- <h4 class="ui inverted ">Fo</h4> -->
+						<!-- <h4 class="ui inverted "></h4> -->
 						<!-- <p>Extra space for a call to action inside the footer that could help re-engage users.</p> -->
 					</div>
 				</div>

@@ -113,6 +113,10 @@
 		/*max-width: 260px;*/
 		display: block;
 	}
+	
+	.ui.table tr td img.cell-image {
+		max-width: 95%;
+	}
 
 }
 @media only screen and (min-width: 301px) and  (max-width: 766px) {
@@ -123,6 +127,9 @@
 		/*width: auto;*/
 		display: block;
 	}
+	.ui.table tr td img.cell-image {
+		max-width: 95%;
+	}
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1050px) {
@@ -130,6 +137,9 @@
 		word-wrap: break-word;
 		max-width: 400px;
 		display: block;
+	}
+	.ui.table tr td img.cell-image {
+		max-width: 95%;
 	}
 
 }
@@ -149,16 +159,6 @@
 	
 }
 
-/*.se-pre-con {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999;
-	display: block;
-	background: url(../assets/preloader_1.gif) center no-repeat #fff;
-}*/
 
 #sidebar-menu {}
 
