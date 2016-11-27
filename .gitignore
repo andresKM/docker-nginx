@@ -47,7 +47,7 @@ jspm_packages
 .yarn-integrity
 
 
-
+bs-config.js
 mainline/alpine/dist/tasks
 mainline/alpine/dist/src
 mainline/alpine/dist/gulpfile.js

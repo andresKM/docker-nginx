@@ -10,36 +10,16 @@
 	<title>Головна сторінка тестового сервісу перевірки деревини - www.proderevo.info</title>
 	<link rel="stylesheet" type="text/css" href="dist/semantic.css">
 	<link rel="stylesheet" type="text/css" href="assets/main.css">
-	<link rel="stylesheet" type="text/css" href="assets/offline-theme-default.css">
-	<link rel="stylesheet" type="text/css" href="assets/offline-language-ua.css">
 	<script src="assets/jquery.min.js"></script>
-	<script src="dist/semantic.js"></script>
+	<script src="dist/semantic.min.js"></script>
 	<script src="assets/modernizr.min.js"></script>
 	<script src="assets/elasticsearch.jquery.min.js"></script>
-	<script src="assets/offline.min.js"></script>
 	<script>
 	var client = new $.es.Client({
 		host: 'http://eod:eod_pass@swarm1813.cloudout.co:9200'
 	});
 
 	$(document).ready(function() {
-		Offline.options = {
-			checkOnLoad: false,
-			interceptRequests: false,
-			checks: {
-				//xhr: {url: 'http://www.proderevo.info/' }
-				image: {
-					url: 'http://www.proderevo.info/favicon.ico'
-				},
-				active: 'image'
-			},
-			reconnect: {
-				initialDelay: 60
-			},
-			requests: true
-		};
-		Offline.check();
-
 		// create sidebar and attach to menu open
 		$('.ui.sidebar').sidebar('attach events', '.toc.item');
 
@@ -50,7 +30,7 @@
 			$('#sidebar-menu').sidebar('show');;
 
 		});
-		$("#start-dimmer").fadeOut(2300);
+		$("#start-dimmer").fadeOut(1200);
 		$('.tabular.menu .item').tab({
 			onFirstLoad: function() {
 				$("#jumbo").remove();
@@ -73,6 +53,11 @@
 			$('#hidden-new-file').click();
 		});
 
+		$('#modal').modal();
+		$("#how-to").on("click", function() {
+			$('#modal').modal('show');
+		});
+		
 
 		$.fn.submit_car = function() {
 			var qq = $("#car-form").form('get field', "search_car").val();
@@ -396,32 +381,6 @@
 			}
 		});
 
-		/*$.fn.loadFile = function(file_bin) {
-			
-			if ( ! window.FileReader ) {
-				alert( 'FileReader API не підтримується браузером.' );
-			}
-			var $i = $( '#hidden-new-file' ), // Put file input ID here
-				input = $i[0]; // Getting the element from jQuery
-			//var file_before_bin;
-			if ( input.files && input.files[0] ) {
-				var file = input.files[0]; // The file
-				var reader = new FileReader(); // FileReader instance
-				reader.readAsDataURL( file );
-				console.log(reader.result);
-				reader.onload = function () {
-					// Do stuff on onload, use reader.result for contents of file
-					file_bin=reader.result;
-					console.log(reader.result);
-					return file_bin;
-				};
-				//reader.readAsText( file );
-			} else {
-				// Handle errors here
-				alert( "Файл не обрано або несумісний браузер." );
-				console.log("else clause in FileReader");
-			}
-		}*/
 
 		$.fn.makeTable = function(mydata) {
 			var table = $('<table class="ui compact celled collapsing striped table results_table">');
@@ -564,6 +523,38 @@
 		<a class="item" data-tab="tab-birka">Пошук по бирці</a>
 		<a class="item" data-tab="tab-input">Внести дані</a>
 	</div>
+	<div class="ui modal" id="modal">
+		<i class="close icon"></i>
+		<div class="header">
+			Як користуватися
+		</div>
+		<div class="image content">
+			<div class="image">
+				<i class="question icon"></i>
+			</div>
+			<div class="description">
+				<p  style="font-size: 1.25em;text-indent: 1em;">Даний сервіс створювався як ефективний засіб громадськості для контролю за лісопродукцією та уособлює собою <a href="https://en.wikipedia.org/wiki/Proof_of_concept">PoC</a> у сфері систем електронного обліку деревини.</p>
+				<p  style="font-size: 1.25em;text-indent: 1em;">Для початку роботи необхідно обрати відповідний пункт головного меню або бокового (доступного на пристроях з малою шириною екрана по натисканню кнопки (іконка з трьома гор.лініями) у верхньому лівому куту екрану) натиснувши на один з наступних варіантів:
+				</p>
+				<div class="ui bulleted animated big list" style="margin: 0 45px 20px;">
+					<div class="item">Пошук  по авто</div>
+					<div class="item">Пошук  по ТТН</div>
+					<div class="item">Пошук  по бирці</div>
+					<div class="item">Внести дані</div>
+				</div>
+				<p  style="font-size: 1.25em;text-indent: 1em;">
+					Вміст вкладки буде відображено в головному вікні. Переключення між вкладками не очищує результати пошуків для зручності. Для того, щоб очистити форму пошуку/вводу натисніть жовту кнопку (Зкинути). Після введення запиту, натискайте синю кнопку (Пошук) і результати буде відображено одразу нижче блоку з формою. Кожен наступний запит затирає блок з результатами - будьте обережні!
+				</p>
+				<p  style="font-size: 1.25em;text-indent: 1em;">
+					В результатах пошуку можливі помилки, оскільки база ТТН-ліс є згенерованою (можливі повтори та друкарські помилки). Для досягнення найбільшої точності необхідно вводити максимальну кількість відомих символів, оскільки застосовується пошук по масці. Наприклад, по запиту "202171", використовуючи пошук по бирках буде знайдено ТТН, в якій присутня бирка з даним номером, а по запиту "170" - найпершу ТТН в якій одна з бирок  <span style="text-decoration: underline;">хоча-б частково містить</span> даний запит (201700, 301170, 600170).
+				</p>
+				<p  style="font-size: 1.25em;text-indent: 1em;">
+					Якщо поле буде не заповнено, то при спробі введення або пошуку дане поле підсвітиться червоним.
+					Єдине необов'язкове поле - поле вкладення файлу (Фото ТТН).
+				</p>
+			</div>
+		</div>
+	</div>
 	<!-- Page Contents -->
 	<div class="pusher">
 		<div class="ui inverted vertical masthead center aligned segment" id="main-menu">
@@ -578,7 +569,7 @@
 					<a class="item" data-tab="tab-birka">Пошук по бирці</a>
 					<a class="item" data-tab="tab-input">Внести дані</a>
 					<div class="right item">
-						<a class="ui inverted button">Як користуватися</a>
+						<a class="ui inverted button" id="how-to">Як користуватися</a>
 					</div>
 				</div>
 			</div>
